@@ -1,0 +1,38 @@
+CREATE DATABASE IF NOT EXISTS bank_queue;
+USE bank_queue;
+
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    password VARCHAR(255) NOT NULL,
+    role VARCHAR(50) NOT NULL,
+    branch_id BIGINT,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE branches (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(255) NOT NULL,
+    location VARCHAR(255) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+CREATE TABLE counters (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    branch_id BIGINT NOT NULL,
+    counter_number INT NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE
+);
+
+CREATE TABLE tokens (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    token_number VARCHAR(100) NOT NULL,
+    branch_id BIGINT NOT NULL,
+    status VARCHAR(50) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    called_at TIMESTAMP NULL,
+    served_at TIMESTAMP NULL,
+    FOREIGN KEY (branch_id) REFERENCES branches(id) ON DELETE CASCADE
+);
