@@ -3,7 +3,6 @@ package com.bank.queue.controller;
 import com.bank.queue.model.Branch;
 import com.bank.queue.service.BranchService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class BranchController {
 
     @PostMapping("/create")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Branch> createBranch(@NonNull @RequestBody Branch branch) {
+    public ResponseEntity<Branch> createBranch(@RequestBody Branch branch) {
         return ResponseEntity.ok(branchService.createBranch(branch));
     }
 

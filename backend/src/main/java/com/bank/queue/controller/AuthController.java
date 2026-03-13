@@ -1,5 +1,6 @@
 package com.bank.queue.controller;
 
+
 import com.bank.queue.dto.AuthRequest;
 import com.bank.queue.dto.AuthResponse;
 import com.bank.queue.dto.RegisterRequest;

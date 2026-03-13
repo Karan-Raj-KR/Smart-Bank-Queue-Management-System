@@ -4,7 +4,6 @@ import com.bank.queue.model.Counter;
 import com.bank.queue.repository.BranchRepository;
 import com.bank.queue.repository.CounterRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,7 +16,8 @@ public class CounterService {
     private final CounterRepository counterRepository;
     private final BranchRepository branchRepository;
 
-    public Counter createCounter(@NonNull Counter counter) {
+    public Counter createCounter(Counter counter) {
+        Objects.requireNonNull(counter, "counter must not be null");
         Long branchId = Objects.requireNonNull(counter.getBranchId(), "branchId must not be null");
         if (!branchRepository.existsById(branchId)) {
             throw new RuntimeException("Branch does not exist with id: " + branchId);
@@ -30,12 +30,12 @@ public class CounterService {
         return counterRepository.findByBranchId(branchId);
     }
 
-    public Counter getCounterById(@NonNull Long id) {
-        return counterRepository.findById(id)
+    public Counter getCounterById(Long id) {
+        return counterRepository.findById(Objects.requireNonNull(id, "id must not be null"))
                 .orElseThrow(() -> new RuntimeException("Counter not found with id: " + id));
     }
 
-    public Counter updateCounterStatus(@NonNull Long id, String status) {
+    public Counter updateCounterStatus(Long id, String status) {
         Counter counter = getCounterById(id);
         counter.setStatus(status.toUpperCase());
         return counterRepository.save(counter);

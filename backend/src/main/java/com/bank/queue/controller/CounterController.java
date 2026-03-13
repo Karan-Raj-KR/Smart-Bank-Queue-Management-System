@@ -3,7 +3,6 @@ package com.bank.queue.controller;
 import com.bank.queue.model.Counter;
 import com.bank.queue.service.CounterService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.lang.NonNull;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +18,7 @@ public class CounterController {
 
     @PostMapping("/create")
     @PreAuthorize("hasRole('ADMIN')")
-    public ResponseEntity<Counter> createCounter(@NonNull @RequestBody Counter counter) {
+    public ResponseEntity<Counter> createCounter(@RequestBody Counter counter) {
         return ResponseEntity.ok(counterService.createCounter(counter));
     }
 

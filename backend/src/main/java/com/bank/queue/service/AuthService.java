@@ -9,6 +9,7 @@ import com.bank.queue.security.CustomUserDetailsService;
 import com.bank.queue.security.JwtUtils;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
+import java.util.Objects;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -38,7 +39,7 @@ public class AuthService {
 
         userRepository.save(user);
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(user.getEmail());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(Objects.requireNonNull(user.getEmail()));
         String jwtToken = jwtUtils.generateToken(userDetails);
         
         return new AuthResponse(jwtToken);
@@ -52,7 +53,7 @@ public class AuthService {
                 )
         );
 
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getEmail());
+        UserDetails userDetails = userDetailsService.loadUserByUsername(Objects.requireNonNull(request.getEmail()));
         String jwtToken = jwtUtils.generateToken(userDetails);
 
         return new AuthResponse(jwtToken);
